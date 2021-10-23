@@ -4,12 +4,7 @@
     ],
     "plugins": [
         [
-            "module-resolver",
-            {
-                "alias": {
-                    "@": "./src"
-                }
-            }
+            "module-resolver"
         ]
     ]
 }
