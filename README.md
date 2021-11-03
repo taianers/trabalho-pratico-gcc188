@@ -33,7 +33,7 @@
 - As branches vinculadas à issues serão criadas de acordo com o nome da issue para melhor identificação das funcionalidades
 
 ### Issues
-- Para todas as funcionalidades, serão criadas issues com backlogm, rastreabilidade dos requisitos e links do documento de requisitos e protótipo de interface
+- Para todas as funcionalidades, serão criadas issues com backlog, rastreabilidade dos requisitos e links do documento de requisitos e protótipo de interface
 
 ### Padrões de Commit
 - Mensagens claras e objetivas
