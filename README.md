@@ -28,7 +28,7 @@
 ## Padrões de uso do Git
 
 ### Branches
-- A main será a branch utilizada com o projeto mais atualizado após testes
+- A master será a branch utilizada com o projeto mais atualizado após testes
 - A dev será a branch utilizada para realização de testes
 - As branches vinculadas à issues serão criadas de acordo com o nome da issue para melhor identificação das funcionalidades
 
