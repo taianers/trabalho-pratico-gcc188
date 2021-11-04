@@ -1,0 +1,142 @@
+swagger: '2.0'
+info:
+  description: 'Gerencia as Categorias de receitas do site'
+  version: '1.0.0'
+  title: 'Receitas Buchinho Cheio'
+host: 'localhost:3000'
+basePath: '/categoria/'
+tags:
+  - name: 'Categoria'
+    description: 'CRUD das categorias das Receitas'
+paths:
+  /:
+    get:
+      tags:
+        - 'Categorias'
+      summary: 'Obtem as instâncias das categorias cadastradas'
+      description: 'Obtem as instâncias dos categorias cadastradas'
+      operationId: 'Obter'
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            type: 'object'
+            $ref: '#/definitions/Categoria'
+        '404':
+          description: '{ erro: "Nenhuma categoria foi encontrada" }'
+        '500':
+          description: '{ erro: "Erro interno do servidor" }'
+    post:
+      tags:
+        - 'Categorias'
+      summary: 'Cria uma instância de uma nova Categoria'
+      description: 'Cria uma instância de uma nova Categoria. Requer nível Admin.'
+      operationId: 'Adicionar'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          required: true
+          schema:
+            $ref: '#/definitions/CategoriaResponse'
+      responses:
+        '200':
+          description: '{ mensagem: "Categoria criada com sucesso" }'
+        '400':
+          description: '{ erro: "O nome é obrigatório" ou "Já existe uma categoria com esse nome" }'
+        '500':
+          description: '{ erro: "Erro interno do servidor" }'
+
+  /{id}:
+    get:
+      tags:
+        - 'Categorias'
+      summary: 'Obtem o nome da categoria que possui o ID informado'
+      description: 'Obtem o nome da categoria que possui o ID informado'
+      operationId: 'ObterUm'
+      parameters:
+        - in: 'path'
+          name: id
+          required: true
+          type: 'string'
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            type: 'object'
+            $ref: '#/definitions/CategoriaResponse'
+        '400':
+          description: '{ erro: "ID inválido" }'
+        '404':
+          description: '{ erro: "Categoria não encontrada" }'
+        '500':
+          description: '{ erro: "Erro interno do servidor" }'
+    put:
+      tags:
+        - 'Categorias'
+      summary: 'Edita o nome  de uma Categoria'
+      description: 'Edita o nome  de uma Categoria. Requer nível Admin.'
+      operationId: 'Editar'
+      parameters:
+        - in: 'path'
+          name: id
+          required: true
+          type: 'string'
+        - in: 'body'
+          name: 'body'
+          required: true
+          schema:
+            $ref: '#/definitions/CategoriaResponse'
+      responses:
+        '200':
+          description: '{ mensagem: "Nome alterado com sucesso" }'
+        '400':
+          description: '{ erro: "Já existe uma categoria com este nome" ou "O nome  é obrigatório" ou "ID inválido" }'
+        '404':
+          description: '{ erro: "Categoria não encontrada" }'
+        '500':
+          description: '{ erro: "Erro interno do servidor" }'
+    delete:
+      tags:
+        - 'Categorias'
+      summary: 'Deleta uma Categoria'
+      description: 'Deleta uma Categoria. Requer nível Admin.'
+      operationId: 'Deletar'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: id
+          required: true
+          type: 'string'
+      responses:
+        '200':
+          description: '{ mensagem: "Categoria deletada com sucesso" }'
+        '400':
+          description: '{ erro: "ID não informado" ou "ID inválido" }'
+        '404':
+          description: '{ erro: "Categoria não encontrada" }'
+        '500':
+          description: '{ error: "Erro interno do servidor" }'
+
+definitions:
+  Categoria:
+    type: 'object'
+    properties:
+      id:
+        type: 'string'
+      name:
+        type: 'string'
+  CategoriaResponse:
+    type: 'object'
+    properties:
+      name:
+        type: 'string'
+
+schemes:
+  - https
