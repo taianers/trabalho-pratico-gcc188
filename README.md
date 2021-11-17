@@ -14,7 +14,7 @@
 - Vue.js 2.6.11
 - HTML5
 - CSS3
-- JS
+- JS ECMAScript 2018
 
 ### Back-end:
 
@@ -24,7 +24,30 @@
 ### Banco de dados:
 
 - Mongodb - 5.0.3
+### Descrição das Pastas
+- CodigoFonte: Diretório contendo backend e frontend.
+  - backend
+      - src: código fonte
+        - app
+          - controllers: lógica de cada uma das rotas
+          - schemas: definição/estrutura dos dados, como se fosse as tabelas das entidades
+          - middlewares: intermediário entre o frontend que terá cliente realizando a requisição [intermediário entre requisição e execução do código], verifica quem pode fazer acesso ou não
+          - config: configurações relacionadas ao servidor para facilitar caso seja necessário migrar para outro 
+          - database: tudo relacionado ao banco de dados
+  - frontend
+      - public: pasta que contém os arquivos que serão publicados na aplicação;
+      - src: código fonte
+        - assets: usada para armazenar os arquivos de mídia
+        - components: contém todos os componentes que serão utilizados no projeto
+        - router: gerenciamento das rotas que serão utilizadas para exibir as views
+        - services/api: comunicação com o backend
+        - views: telas da aplicação
 
+
+- Diagramas: Diretório contendo os diagramas de classes, sequência, implantação e casos de uso.
+- Padrões Adotados: Diretório contendo padrões para documentação e codificação.
+- Protótipo de Interface: Diretório contendo as imagens da interface do projeto.
+- Requisitos: Diretório contendo a documentação dos requisitos.
 ## Padrões de uso do Git
 
 ### Branches
