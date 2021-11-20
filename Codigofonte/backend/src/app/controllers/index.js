@@ -1,3 +1,4 @@
 import Categoria from './Categoria';
+import Receita from './Receita';
 
-export { Categoria };
+export { Categoria, Receita };
