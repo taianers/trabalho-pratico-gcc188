@@ -18,6 +18,10 @@ const UsuarioSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   senhaResetToken: {
     type: String,
     select: false,
@@ -39,4 +43,21 @@ UsuarioSchema.pre('save', function (next) {
     });
 });
 
-export default mongoose.model('Usuario', UsuarioSchema);
+const Usuario = mongoose.model('Usuario', UsuarioSchema);
+export default Usuario;
+
+//Apenas para facilitar a fase de desenvolvimento
+if (process.env.NODE_ENV !== 'production') {
+  Usuario.findOne({ email: 'admin@buchinhocheio.com.br' })
+    .then((res) => {
+      if (!res) {
+        Usuario.create({
+          nome: 'Administração Buchinho Cheio',
+          email: 'admin@buchinhocheio.com.br',
+          senha: '12345678',
+          isAdmin: true,
+        }).catch(console.error);
+      }
+    })
+    .catch(console.error);
+}
