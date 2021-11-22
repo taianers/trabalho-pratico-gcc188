@@ -6,6 +6,7 @@ import Usuario from '../schemas/Usuario';
 import Autenticacao from '../../config/auth';
 import Mailer from '../../modules/Mailer';
 import { mensagens } from '../../utils/mensagensInformativas';
+import AuthMiddleware from '../middlewares/Auth';
 
 const router = new Router();
 
@@ -15,7 +16,7 @@ const gerarToken = (params) => {
   });
 };
 
-router.post('/cadastrarUsuario', (req, res) => {
+router.post('/cadastrarusuario', (req, res) => {
   const { nome, email, senha } = req.body;
   Usuario.findOne({ email })
     .then((dadoUsuario) => {
@@ -49,7 +50,12 @@ router.post('/login', (req, res) => {
           .compare(senha, usuario.senha)
           .then((resultado) => {
             if (resultado) {
-              const token = gerarToken({ uid: usuario.id });
+              const token = gerarToken({
+                uid: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email,
+                permissao: usuario.isAdmin,
+              });
               return res.send({ token: token, expiracaoToken: '1d' });
             } else {
               return res.status(400).send({ erro: 'Senha Inválida!' });
@@ -68,7 +74,8 @@ router.post('/login', (req, res) => {
       return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
     });
 });
-router.post('/esqueciMinhaSenha', (req, res) => {
+
+router.post('/esqueciminhasenha', (req, res) => {
   const { email } = req.body;
 
   Usuario.findOne({ email })
@@ -121,7 +128,7 @@ router.post('/esqueciMinhaSenha', (req, res) => {
     });
 });
 
-router.post('/resetarSenha', (req, res) => {
+router.post('/resetarsenha', (req, res) => {
   const { email, token, novaSenha } = req.body;
 
   Usuario.findOne({ email })
@@ -155,6 +162,50 @@ router.post('/resetarSenha', (req, res) => {
     .catch((error) => {
       console.error('Erro no recuperar minha senha', error);
       return res.status(500).send({ error: mensagens.ERRO_INTERNO });
+    });
+});
+
+router.get('/infousuario/:id', AuthMiddleware('admin'), (req, res) => {
+  const { id } = req.params;
+
+  Usuario.findById(id)
+    .then((usuario) => {
+      if (usuario) {
+        return res.send(usuario);
+      } else {
+        return res.status(404).send({ erro: 'Usuário não encontrado' });
+      }
+    })
+    .catch((error) => {
+      console.error('Erro ao buscar usuário: ', error);
+      res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+    });
+});
+
+router.get('/infousuarios', AuthMiddleware('admin'), (req, res) => {
+  Usuario.find()
+    .then((usuarios) => {
+      if (usuarios) {
+        return res.send(usuarios);
+      } else {
+        return res.status(404).send({ erro: 'Nenhum usuário encontrado' });
+      }
+    })
+    .catch((error) => {
+      console.error('Erro ao buscar usuários: ', error);
+      res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+    });
+});
+
+router.delete('/deletarusuario', AuthMiddleware('admin'), (req, res) => {
+  const { email } = req.body;
+  Usuario.findOneAndDelete({ email })
+    .then(() => {
+      return res.send({ mensagem: mensagens.SUCESSO_EXCLUIR });
+    })
+    .catch((error) => {
+      console.error('Erro ao excluir usuário: ', error);
+      return res.status(400).send({ erro: mensagens.ERRO_EXCLUIR });
     });
 });
 
