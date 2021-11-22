@@ -1,3 +1,3 @@
 import Categoria from './Categoria';
-
-export { Categoria };
+import Auth from './Auth';
+export { Categoria, Auth };
