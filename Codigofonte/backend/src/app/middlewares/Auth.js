@@ -25,10 +25,11 @@ export default (permissao) => {
         if (err) {
           return res.status(401).send({ erro: 'Token fornecido inválido' });
         } else {
-          req.uid = decoded.id;
-          req.nome = decoded.nome;
-          req.email = decoded.email;
-          req.permissao = decoded.permissao;
+          req.user = {};
+          req.user.uid = decoded.uid;
+          req.user.nome = decoded.nome;
+          req.user.email = decoded.email;
+          req.user.admin = decoded.permissao;
 
           if (permissao == 'admin') {
             if (decoded.permissao) return next();
