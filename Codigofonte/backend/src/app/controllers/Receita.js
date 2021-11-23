@@ -49,7 +49,7 @@ router.get('/:id', (req, res) => {
           tempoPreparo: dadoReceita.tempoPreparo,
           categoria: dadoReceita.categoria,
           qtdPorcoes: dadoReceita.qtdPorcoes,
-          nomeCriador: dadoReceita.criador.nomeCriador,
+          nomeCriador: dadoReceita.nomeCriador,
         });
       } else {
         return res.status(404).send({ erro: mensagens.DADO_NAO_ENCONTRADO });
