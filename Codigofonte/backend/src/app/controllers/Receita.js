@@ -64,12 +64,12 @@ router.get('/:id', (req, res) => {
 router.post('/', async (req, res) => {
     const { nome, ingredientes, modoPreparo, tempoPreparo, categoria, qtdPorcoes } = req.body;
 
-    if (!nome) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!ingredientes) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!modoPreparo) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!tempoPreparo) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!categoria) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!qtdPorcoes) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
+    if (!nome) return res.status(400).send({ erro: 'Campo nome é obrigatório' });
+    if (!ingredientes) return res.status(400).send({ erro: 'Campo ingredientes é obrigatório' });
+    if (!modoPreparo) return res.status(400).send({ erro: 'Campo modo de preparo é obrigatório' });
+    if (!tempoPreparo) return res.status(400).send({ erro: 'Campo tempo de preparo é obrigatório' });
+    if (!categoria) return res.status(400).send({ erro: 'Campo categoria é obrigatório' });
+    if (!qtdPorcoes) return res.status(400).send({ erro: 'Campo porções é obrigatório' });
 
     Receita.create({
         nome: nome, ingredientes: ingredientes, modoPreparo: modoPreparo, tempoPreparo: tempoPreparo,
