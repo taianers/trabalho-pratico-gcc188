@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
         })
         .catch((erro) => {
             console.error('Erro ao listar as receitas cadastradas', erro);
-            return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+            return res.status(500).send({ erro: mensagens.ERRO_LISTAR });
         });
 });
 
@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
         })
         .catch((erro) => {
             console.error('Erro ao buscar receita', erro);
-            return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+            return res.status(500).send({ erro: mensagens.ERRO_LISTAR });
         });
 });
 
@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
         })
         .catch((erro) => {
             console.error('Erro ao criar uma receita', erro);
-            return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+            return res.status(500).send({ erro: mensagens.ERRO_CADASTRAR });
         });
 });
 
@@ -88,12 +88,12 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, ingredientes, modoPreparo, tempoPreparo, categoria, qtdPorcoes } = req.body;
 
-    if (!nome) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!ingredientes) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!modoPreparo) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!tempoPreparo) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!categoria) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
-    if (!qtdPorcoes) return res.status(400).send({ erro: mensagens.INFORMACAO_OBRIGATORIA });
+    if (!nome) return res.status(400).send({ erro: 'Campo nome é obrigatório' });
+    if (!ingredientes) return res.status(400).send({ erro: 'Campo ingredientes é obrigatório' });
+    if (!modoPreparo) return res.status(400).send({ erro: 'Campo modo de preparo é obrigatório' });
+    if (!tempoPreparo) return res.status(400).send({ erro: 'Campo tempo de preparo é obrigatório' });
+    if (!categoria) return res.status(400).send({ erro: 'Campo categoria é obrigatório' });
+    if (!qtdPorcoes) return res.status(400).send({ erro: 'Campo porções é obrigatório' });
 
     if (!isValidObjectId(id))
         return res.status(400).send({ erro: mensagens.ID_INVALIDO });
@@ -108,7 +108,7 @@ router.put('/:id', async (req, res) => {
         })
         .catch((erro) => {
             console.error('Erro ao editar receita', erro);
-            return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+            return res.status(500).send({ erro: mensagens.ERRO_ALTERAR });
         });
 });
 
@@ -134,7 +134,7 @@ router.delete('/:id', (req, res) => {
         })
         .catch((erro) => {
             console.error('Erro ao remover receita', erro);
-            return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+            return res.status(500).send({ erro: mensagens.ERRO_EXCLUIR });
         });
 });
 
