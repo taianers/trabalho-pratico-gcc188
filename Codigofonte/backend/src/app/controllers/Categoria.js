@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import Categoria from '@/app/schemas/Categoria';
+import AuthMiddleware from '../middlewares/Auth';
 
 const router = new Router();
 
@@ -47,7 +48,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', AuthMiddleware('admin'), async (req, res) => {
   const { nome } = req.body;
 
   if (!nome) return res.status(400).send({ erro: 'O nome é obrigatório' });
@@ -69,7 +70,7 @@ router.post('/', async (req, res) => {
     });
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', AuthMiddleware('admin'), async (req, res) => {
   const { id } = req.params;
   const { nome } = req.body;
 
@@ -99,11 +100,11 @@ router.put('/:id', async (req, res) => {
     });
 });
 
-router.delete('/', (req, res) => {
+router.delete('/', AuthMiddleware('admin'), (req, res) => {
   return res.status(400).send({ erro: 'ID não informado' });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', AuthMiddleware('admin'), (req, res) => {
   const { id } = req.params;
 
   if (!isValidObjectId(id))
