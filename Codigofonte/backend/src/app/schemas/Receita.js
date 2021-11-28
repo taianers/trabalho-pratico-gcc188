@@ -25,6 +25,9 @@ const ReceitaSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  foto: {
+    type: String,
+  },
   uidCriador: {
     type: String,
     required: true,
