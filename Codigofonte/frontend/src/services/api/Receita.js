@@ -1,10 +1,14 @@
 import Api from "./Api";
 
-const ExemploGet = () => {
-  return Api().get("/url-do-get");
+const getReceitas = () => {
+  return Api().get("/receita/");
 };
 
-export { ExemploGet };
+const getReceita = (id) => {
+  return Api().get(`/receita/${id}`);
+};
+
+export { getReceitas, getReceita };
 
 // Para usar:
 //     - Importar a funcao (import { ExemploGet } from '@/services/ExemploApi')
