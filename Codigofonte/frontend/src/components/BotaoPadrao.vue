@@ -72,6 +72,6 @@ export default {
 }
 .botao-arredondado {
   border-radius: 30px;
-  //padding: 16px 45px;
+  padding: 12px 24px;
 }
 </style>
