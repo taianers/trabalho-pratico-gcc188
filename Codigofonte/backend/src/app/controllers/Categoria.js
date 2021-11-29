@@ -115,7 +115,7 @@ router.delete('/:id', AuthMiddleware('admin'), (req, res) => {
       if (category) {
         return res
           .status(200)
-          .send({ messagem: 'Categoria deletada com sucesso' });
+          .send({ mensagem: 'Categoria deletada com sucesso' });
       } else {
         return res.status(404).send({ erro: 'Categoria não encontrada' });
       }

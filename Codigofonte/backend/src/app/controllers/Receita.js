@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Receita from '../schemas/Receita';
+import Reporte from '../schemas/Reporte';
 import { mensagens } from '../../utils/mensagensInformativas';
 import { isValidObjectId } from 'mongoose';
 import AuthMiddleware from '../middlewares/Auth';
@@ -8,16 +9,8 @@ import removeImage from '../../utils/removeImage';
 
 const router = new Router();
 
-router.post('/teste', Multer.single('image'), async (req, res) => {
-  const foto = req.file.filename;
-  console.log(foto);
-  await new Promise((r) => setTimeout(r, 2000));
-  removeImage(foto);
-  return res.send();
-});
-
-router.get('/', (req, res) => {
-  Receita.find()
+const getReceitas = (res, filtro) => {
+  Receita.find(filtro)
     .then((dadoReceita) => {
       if (dadoReceita.length > 0) {
         const receitas = dadoReceita.map((receita) => {
@@ -42,6 +35,14 @@ router.get('/', (req, res) => {
       console.error('Erro ao listar as receitas cadastradas', erro);
       return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
     });
+};
+
+router.get('/usuario', AuthMiddleware('usuario'), (req, res) => {
+  return getReceitas(res, { uidCriador: req.user.uid });
+});
+
+router.get('/', (req, res) => {
+  return getReceitas(res, {});
 });
 
 router.get('/:id', (req, res) => {
@@ -122,6 +123,10 @@ router.post(
   },
 );
 
+router.put('/', AuthMiddleware('admin'), (req, res) => {
+  return res.status(400).send({ erro: mensagens.ID_NAO_ESPECIFICADO });
+});
+
 router.put(
   '/:id',
   [AuthMiddleware('usuario'), Multer.single('foto')],
@@ -174,7 +179,7 @@ router.put(
         if (dadoReceita) {
           if (foto) removeImage(dadoReceita.foto);
 
-          return res.status(200).send(dadoReceita);
+          return res.status(200).send({ mensagem: mensagens.SUCESSO_ALTERAR });
         } else {
           removeImage(foto);
           return res.status(404).send({ erro: mensagens.DADO_NAO_ENCONTRADO });
@@ -211,7 +216,20 @@ router.delete('/:id', AuthMiddleware('usuario'), (req, res) => {
   Receita.findOneAndRemove(filtro)
     .then((dadoReceita) => {
       if (dadoReceita) {
-        return res.status(200).send({ messagem: mensagens.SUCESSO_EXCLUIR });
+        const { _id } = dadoReceita;
+        Reporte.deleteMany({ idReceita: _id })
+          .then((reportes) => console.log(reportes))
+          .catch((error) => {
+            console.error(
+              'Ocorreu o seguinte erro ao excluir os reportes da receita: ',
+              error,
+            );
+            return res.status(200).send({
+              mensagem:
+                'Receita excluída com sucesso, mas os reportes precisam ser excluídos manualmente.',
+            });
+          });
+        return res.status(200).send({ mensagem: mensagens.SUCESSO_EXCLUIR });
       } else {
         return res.status(404).send({ erro: mensagens.DADO_NAO_ENCONTRADO });
       }

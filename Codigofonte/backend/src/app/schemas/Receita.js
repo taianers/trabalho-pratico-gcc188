@@ -36,12 +36,6 @@ const ReceitaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  /* foto: [
-        {
-            type: String,
-            required: true
-        }
-    ], */
   createAt: {
     type: Date,
     default: Date.now,
