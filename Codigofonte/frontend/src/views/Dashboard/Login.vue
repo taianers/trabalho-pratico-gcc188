@@ -92,7 +92,7 @@ export default {
 }
 
 .voltar {
-  background-image: url("../assets/dashboard/voltar.svg");
+  background-image: url("../../assets/dashboard/voltar.svg");
   background-size: cover;
   width: 125px;
   height: 25px;
