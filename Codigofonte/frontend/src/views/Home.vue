@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+    <ModalVerMais idReceita="61a4275d935baf039e344833" />
     <!-- <botao-padrao
       aparencia="primario"
       arredondado="true"
@@ -13,19 +14,20 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+// import HelloWorld from '@/components/HelloWorld.vue';
+import ModalVerMais from "@/components/ModalVerMais.vue";
 //import BotaoPadrao from "@/components/BotaoPadrao.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld,
+    ModalVerMais
     //    BotaoPadrao,
   },
   methods: {
     // teste: (e) => {
     //   console.log(e);
     // },
-  },
+  }
 };
 </script>
