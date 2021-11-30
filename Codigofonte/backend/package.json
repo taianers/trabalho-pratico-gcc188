@@ -4,7 +4,8 @@
   "description": "Base inicial para backend em nodejs, express e mongodb",
   "main": "./src/index.js",
   "scripts": {
-    "serve": "nodemon --exec babel-node ./src/index.js"
+    "serve": "nodemon --exec babel-node ./src/index.js",
+    "test": "jest"
   },
   "author": "Equipe buchinho cheio",
   "license": "ISC",

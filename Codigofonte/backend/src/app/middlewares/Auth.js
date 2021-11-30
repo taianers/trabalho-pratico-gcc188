@@ -6,7 +6,7 @@ export default (permissao) => {
   return (req, res, next) => {
     if (!permissao || (permissao != 'admin' && permissao != 'usuario')) {
       console.error('A permissão foi inserida incorretamente');
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.TOKEN_INVALIDO });
     }
 
     const authHeader = req.headers.authorization;
@@ -15,15 +15,15 @@ export default (permissao) => {
       const tokenData = authHeader.split(' ');
 
       if (tokenData.length != 2) {
-        return res.status(401).send({ erro: 'Token fornecido inválido' });
+        return res.status(401).send({ erro: mensagens.TOKEN_INVALIDO });
       }
       const [scheme, token] = tokenData;
       if (scheme.indexOf('Bearer') < 0) {
-        return res.status(401).send({ erro: 'Token fornecido inválido' });
+        return res.status(401).send({ erro: mensagens.TOKEN_INVALIDO });
       }
       jwt.verify(token, authConfig.secret, (err, decoded) => {
         if (err) {
-          return res.status(401).send({ erro: 'Token fornecido inválido' });
+          return res.status(401).send({ erro: mensagens.TOKEN_INVALIDO });
         } else {
           req.user = {};
           req.user.uid = decoded.uid;
@@ -44,7 +44,7 @@ export default (permissao) => {
         }
       });
     } else {
-      return res.status(401).send({ erro: 'Token fornecido inválido' });
+      return res.status(401).send({ erro: mensagens.TOKEN_INVALIDO });
     }
   };
 };

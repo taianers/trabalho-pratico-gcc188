@@ -26,7 +26,7 @@ router.get('/', AuthMiddleware('admin'), (req, res) => {
     })
     .catch((err) => {
       console.error('Erro ao listar as reportes cadastrados', err);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.ERRO_LISTAR });
     });
 });
 
@@ -70,7 +70,7 @@ router.post('/', AuthMiddleware('usuario'), async (req, res) => {
     })
     .catch((erro) => {
       console.error('Erro ao criar reporte', erro);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.ERRO_CADASTRAR });
     });
 });
 
@@ -96,7 +96,7 @@ router.put('/:id', AuthMiddleware('admin'), (req, res) => {
     })
     .catch((erro) => {
       console.error('Erro ao editar reporte', erro);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.ERRO_ALTERAR });
     });
 });
 
@@ -118,7 +118,7 @@ router.delete('/:id', AuthMiddleware('admin'), (req, res) => {
     })
     .catch((err) => {
       console.error('Erro ao remover reporte', err);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.ERRO_EXCLUIR });
     });
 });
 

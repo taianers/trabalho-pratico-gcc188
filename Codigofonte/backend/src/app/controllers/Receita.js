@@ -26,6 +26,7 @@ const getReceitas = (res, filtro) => {
             nomeCriador: receita.nomeCriador,
           };
         });
+        if (filtro._id) return res.status(200).send(receitas[0]);
         return res.status(200).send(receitas);
       } else {
         return res.status(404).send({ erro: mensagens.DADO_NAO_ENCONTRADO });
@@ -33,7 +34,7 @@ const getReceitas = (res, filtro) => {
     })
     .catch((erro) => {
       console.error('Erro ao listar as receitas cadastradas', erro);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.ERRO_LISTAR });
     });
 };
 
@@ -46,32 +47,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const { id } = req.params;
-
-  if (!isValidObjectId(id))
-    return res.status(400).send({ erro: mensagens.ID_INVALIDO });
-
-  Receita.findById(id)
-    .then((dadoReceita) => {
-      if (dadoReceita) {
-        return res.send({
-          nome: dadoReceita.nome,
-          ingredientes: dadoReceita.ingredientes,
-          modoPreparo: dadoReceita.modoPreparo,
-          tempoPreparo: dadoReceita.tempoPreparo,
-          categoria: dadoReceita.categoria,
-          foto: dadoReceita.foto,
-          qtdPorcoes: dadoReceita.qtdPorcoes,
-          nomeCriador: dadoReceita.nomeCriador,
-        });
-      } else {
-        return res.status(404).send({ erro: mensagens.DADO_NAO_ENCONTRADO });
-      }
-    })
-    .catch((erro) => {
-      console.error('Erro ao buscar receita', erro);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
-    });
+  return getReceitas(res, { _id: req.params.id });
 });
 
 router.post(
@@ -120,7 +96,7 @@ router.post(
       .catch((erro) => {
         removeImage(foto);
         console.error('Erro ao criar uma receita', erro);
-        return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+        return res.status(500).send({ erro: mensagens.ERRO_CADASTRAR });
       });
   },
 );
@@ -190,7 +166,7 @@ router.put(
       .catch((erro) => {
         removeImage(foto);
         console.error('Erro ao editar receita', erro);
-        return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+        return res.status(500).send({ erro: mensagens.ERRO_ALTERAR });
       });
   },
 );
@@ -238,7 +214,7 @@ router.delete('/:id', AuthMiddleware('usuario'), (req, res) => {
     })
     .catch((erro) => {
       console.error('Erro ao remover receita', erro);
-      return res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      return res.status(500).send({ erro: mensagens.ERRO_EXCLUIR });
     });
 });
 
