@@ -1,37 +1,23 @@
 <template>
   <div>
-    <div @click="$router.push('/')" class="voltar"></div>
+    <div @click="$router.push('/login')" class="voltar"></div>
     <div class="container">
-      <InputPadrao label="Email" style="margin-bottom: 30px;" />
-      <InputPadrao label="Senha" type="password" style="margin-bottom: 15px;" />
-      <div
-        class="container-linha"
-        style="justify-content: center; margin-bottom: 40px;"
-      >
-        <p>
-          Esqueceu sua senha?
-          <a href="#" id="meulink" @click="$router.push('/redefinirsenha')"
-            >Clique aqui</a
-          >
-        </p>
-      </div>
+      <InputPadrao
+        label="Nova senha"
+        type="password"
+        style="margin-bottom: 15px;"
+      />
+      <InputPadrao
+        label="Confirmar nova senha"
+        type="password"
+        style="margin-bottom: 15px;"
+      />
       <BotaoPadrao
         aparencia="botao-secundario"
-        titulo="Entrar"
+        titulo="Redefinir"
         @click="teste"
         style="margin-bottom: 20px;"
       />
-      <div class="container-linha">
-        <p>
-          É novo por aqui?
-        </p>
-        <BotaoPadrao
-          aparencia="botao-secundario"
-          arredondado="true"
-          titulo="Crie uma conta"
-          @click="$router.push('/cadastro')"
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -41,7 +27,7 @@ import BotaoPadrao from "../../components/BotaoPadrao.vue";
 import InputPadrao from "../../components/InputPadrão.vue";
 
 export default {
-  name: "login",
+  name: "redefinirSenha",
   components: {
     BotaoPadrao,
     InputPadrao,
@@ -76,21 +62,6 @@ export default {
     margin-bottom: 0;
   }
   margin-top: 30px;
-}
-
-.container-linha {
-  display: flex;
-  font-size: 16px;
-  gap: 4px;
-  padding: 5px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-#meulink {
-  color: #ffffff;
-  font-weight: bold;
 }
 
 .voltar {

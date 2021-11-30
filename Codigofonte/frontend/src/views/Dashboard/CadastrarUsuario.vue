@@ -25,7 +25,7 @@ import BotaoPadrao from "../../components/BotaoPadrao.vue";
 import InputPadrao from "../../components/InputPadrão.vue";
 
 export default {
-  name: "login",
+  name: "cadastrarUsuario",
   components: {
     BotaoPadrao,
     InputPadrao,
