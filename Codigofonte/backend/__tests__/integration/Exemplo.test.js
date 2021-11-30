@@ -1,5 +1,5 @@
 describe('Exemplo', () => {
-  it('Deve ser possível verificar se 2 + 2 é = 4', async () => {
+  it('Deve ser possível verificar se 2 + 2 é = 4', () => {
     // Nossa chamada para serviço
     expect(2 + 2).toBe(4);
   });
