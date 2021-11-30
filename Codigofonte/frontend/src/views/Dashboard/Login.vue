@@ -2,8 +2,26 @@
   <div>
     <div @click="$router.push('/')" class="voltar"></div>
     <div class="container">
-      <InputPadrao label="Email" style="margin-bottom: 30px;" />
-      <InputPadrao label="Senha" type="password" style="margin-bottom: 15px;" />
+      <div class="container-input">
+        <input
+          v-model="form.email"
+          type="email"
+          name="email"
+          required
+          autocomplete="off"
+        />
+        <label>Email</label>
+      </div>
+      <div class="container-input">
+        <input
+          v-model="form.senha"
+          type="password"
+          name="senha"
+          required
+          autocomplete="off"
+        />
+        <label>Senha</label>
+      </div>
       <div
         class="container-linha"
         style="justify-content: center; margin-bottom: 40px;"
@@ -18,7 +36,7 @@
       <BotaoPadrao
         aparencia="botao-secundario"
         titulo="Entrar"
-        @click="teste"
+        @click="login"
         style="margin-bottom: 20px;"
       />
       <div class="container-linha">
@@ -38,20 +56,38 @@
 
 <script>
 import BotaoPadrao from "../../components/BotaoPadrao.vue";
-import InputPadrao from "../../components/InputPadrão.vue";
+// import InputPadrao from "../../components/InputPadrão.vue";
+import { postLogin } from "@/services/api/Auth.js";
+import { setCookie } from "@/utils/Cookie.js";
 
 export default {
   name: "login",
   components: {
-    BotaoPadrao,
-    InputPadrao,
+    BotaoPadrao
+    // InputPadrao
+  },
+
+  data() {
+    return {
+      form: {
+        email: "",
+        senha: ""
+      }
+    };
   },
 
   methods: {
-    teste: (e) => {
-      console.log(e);
-    },
-  },
+    login() {
+      console.log(this.form);
+      postLogin(this.form)
+        .then((res) =>
+          setCookie("token", res.data.token, {
+            expires: Number.parseInt(res.data.expiracaoToken)
+          })
+        )
+        .catch((error) => console.log(error));
+    }
+  }
 };
 </script>
 
@@ -100,5 +136,40 @@ export default {
   height: 25px;
   cursor: pointer;
   margin-left: 30px;
+}
+
+.container-input {
+  position: relative;
+  width: 100%;
+}
+
+.container-input input {
+  width: 100%;
+  font-size: 24px;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ffffff;
+  margin-bottom: 30px;
+}
+
+.container-input label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 20px;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.container-input input:focus ~ label,
+.container-input input:valid ~ label {
+  top: -30px;
+  font-size: 16px;
 }
 </style>
