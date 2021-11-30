@@ -1,35 +1,21 @@
 <template>
   <div>
-    <div @click="$router.push('/')" class="voltar"></div>
+    <div @click="$router.push('/login')" class="voltar"></div>
     <div class="container">
       <InputPadrao label="Email" style="margin-bottom: 30px;" />
+      <InputPadrao label="Nome" style="margin-bottom: 30px;" />
       <InputPadrao label="Senha" type="password" style="margin-bottom: 15px;" />
-      <div
-        class="container-linha"
-        style="justify-content: center; margin-bottom: 40px;"
-      >
-        <p>
-          Esqueceu sua senha?
-          <a href="#" id="meulink">Clique aqui</a>
-        </p>
-      </div>
+      <InputPadrao
+        label="Confirmar senha"
+        type="password"
+        style="margin-bottom: 15px;"
+      />
       <BotaoPadrao
         aparencia="botao-secundario"
-        titulo="Entrar"
+        arredondado="true"
+        titulo="Cadastrar"
         @click="teste"
-        style="margin-bottom: 20px;"
       />
-      <div class="container-linha">
-        <p>
-          É novo por aqui?
-        </p>
-        <BotaoPadrao
-          aparencia="botao-secundario"
-          arredondado="true"
-          titulo="Crie uma conta"
-          @click="$router.push('/cadastro')"
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -74,21 +60,6 @@ export default {
     margin-bottom: 0;
   }
   margin-top: 30px;
-}
-
-.container-linha {
-  display: flex;
-  font-size: 16px;
-  gap: 4px;
-  padding: 5px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-#meulink {
-  color: #ffffff;
-  font-weight: bold;
 }
 
 .voltar {
