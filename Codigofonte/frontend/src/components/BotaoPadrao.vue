@@ -4,10 +4,17 @@
     :class="[
       'botao',
       aparencia == 'primario' ? 'botao-primario' : 'botao-secundario',
-      arredondado ? 'botao-arredondado' : 'botao-container',
+      arredondado ? 'botao-arredondado' : 'botao-container'
     ]"
   >
-    {{ titulo }}
+    <label
+      v-if="label"
+      :for="labelfor"
+      style="margin: 0px; width: 100%; cursor: pointer;"
+    >
+      {{ titulo }}
+    </label>
+    <p v-else style="margin: 0px;">{{ titulo }}</p>
   </button>
 </template>
 
@@ -18,20 +25,22 @@ export default {
     titulo: String,
     aparencia: {
       type: String,
-      default: "primario",
+      default: "primario"
     }, // primario ou secundario
     arredondado: Boolean,
+    label: Boolean,
+    labelfor: String
   },
   methods: {
     click(e) {
       this.$emit("click", e);
-    },
+    }
   },
   data() {
     return {
-      styleBotao: {},
+      styleBotao: {}
     };
-  },
+  }
 };
 </script>
 
@@ -48,19 +57,20 @@ export default {
 .botao-primario {
   background-color: #780116;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Roboto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 30px;
-  text-align: center;
   color: #ffffff;
 }
 .botao-secundario {
-  background: #ffffff;
-  font-family: Roboto;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
+  font-weight: bold;
+  font-size: 16px;
   color: #000000;
 }
 .botao-container {
@@ -71,6 +81,6 @@ export default {
 }
 .botao-arredondado {
   border-radius: 30px;
-  padding: 16px 45px;
+  padding: 12px 24px;
 }
 </style>
