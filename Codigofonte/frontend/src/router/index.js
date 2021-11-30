@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Dashboard/Login.vue";
+import CadastrarUsuario from "../views/Dashboard/CadastrarUsuario.vue";
+import RedefinirSenha from "../views/Dashboard/RedefinirSenha.vue";
 
 Vue.use(VueRouter);
 
@@ -23,6 +25,16 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/cadastro",
+    name: "cadastro",
+    component: CadastrarUsuario,
+  },
+  {
+    path: "/redefinirsenha",
+    name: "redefinirsenha",
+    component: RedefinirSenha,
   },
 ];
 
