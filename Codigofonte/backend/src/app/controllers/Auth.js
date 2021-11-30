@@ -178,7 +178,7 @@ router.get('/infousuario/:id', AuthMiddleware('admin'), (req, res) => {
     })
     .catch((error) => {
       console.error('Erro ao buscar usuário: ', error);
-      res.status(500).send({ erro: mensagens.ERRO_INTERNO });
+      res.status(500).send({ erro: mensagens.ERRO_LISTAR });
     });
 });
 
