@@ -4,10 +4,17 @@
     :class="[
       'botao',
       aparencia == 'primario' ? 'botao-primario' : 'botao-secundario',
-      arredondado ? 'botao-arredondado' : 'botao-container',
+      arredondado ? 'botao-arredondado' : 'botao-container'
     ]"
   >
-    {{ titulo }}
+    <label
+      v-if="label"
+      :for="labelfor"
+      style="margin: 0px; width: 100%; cursor: pointer;"
+    >
+      {{ titulo }}
+    </label>
+    <p v-else style="margin: 0px;">{{ titulo }}</p>
   </button>
 </template>
 
@@ -18,20 +25,22 @@ export default {
     titulo: String,
     aparencia: {
       type: String,
-      default: "primario",
+      default: "primario"
     }, // primario ou secundario
     arredondado: Boolean,
+    label: Boolean,
+    labelfor: String
   },
   methods: {
     click(e) {
       this.$emit("click", e);
-    },
+    }
   },
   data() {
     return {
-      styleBotao: {},
+      styleBotao: {}
     };
-  },
+  }
 };
 </script>
 

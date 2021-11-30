@@ -89,6 +89,8 @@ router.post(
 
     const foto = req.file?.filename;
 
+    console.log(req.body);
+    console.log(foto);
     if (
       !nome ||
       !ingredientes ||

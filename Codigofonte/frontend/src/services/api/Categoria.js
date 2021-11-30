@@ -1,18 +1,14 @@
 import Api from "./Api";
 
-const getReceitas = () => {
-  return Api().get("/receita/");
+const getCategorias = () => {
+  return Api().get("/categoria/");
 };
 
-const getReceita = (id) => {
-  return Api().get(`/receita/${id}`);
+const getCategoria = (id) => {
+  return Api().get(`/categoria/${id}`);
 };
 
-const postReceita = (receita) => {
-  return Api().post("/receita", receita);
-};
-
-export { getReceitas, getReceita, postReceita };
+export { getCategorias, getCategoria };
 
 // Para usar:
 //     - Importar a funcao (import { ExemploGet } from '@/services/ExemploApi')
